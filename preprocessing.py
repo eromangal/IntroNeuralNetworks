@@ -15,11 +15,6 @@ class DataProcessing:
         self.output_test = []
 
     def gen_train(self, seq_len):
-        """
-        Generates training data
-        :param seq_len: length of window
-        :return: X_train and Y_train
-        """
         for i in range((len(self.stock_train)//seq_len)*seq_len - seq_len - 1):
             x = np.array(self.stock_train.iloc[i: i + seq_len, 1])
             y = np.array([self.stock_train.iloc[i + seq_len + 1, 1]], np.float64)

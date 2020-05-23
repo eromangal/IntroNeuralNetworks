@@ -8,17 +8,16 @@ import fix_yahoo_finance as fix
 fix.pdr_override()
 
 start = "2003-01-01"
-end = "2018-01-01"
+end = "2020-01-01"
 
 hist.get_stock_data("AAPL", start_date=start, end_date=end)
-process = DataProcessing("stock_prices.csv", 0.9)
+process = DataProcessing("stock_prices.csv")
 process.gen_test(10)
 process.gen_train(10)
 
-X_train = process.X_train.reshape((3379, 10, 1)) / 200
+X_train = process.X_train / 200
 Y_train = process.Y_train / 200
-
-X_test = process.X_test.reshape(359, 10, 1) / 200
+X_test = process.X_test / 200
 Y_test = process.Y_test / 200
 
 model = tf.keras.Sequential()
@@ -32,7 +31,7 @@ model.fit(X_train, Y_train, epochs=50)
 
 print(model.evaluate(X_test, Y_test))
 
-data = pdr.get_data_yahoo("AAPL", "2017-12-19", "2018-01-03")
+data = pdr.get_data_yahoo("AAPL", "2019-12-01", "2018-12-14")
 stock = data["Adj Close"]
 X_predict = np.array(stock).reshape((1, 10, 1)) / 200
 
